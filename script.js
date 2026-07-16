@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- scroll reveal (progressive enhancement) ----
   const revealTargets = document.querySelectorAll(
-    '.section-head, .pub-card, .blog-card, .aud-tile, .aud-col, .impact-card-v2, .strategy-block, .strategy-block-v2, .journey-step, .sidebar-card, .content-block, .filter-panel, .tab-panel-frame'
+    '.section-head, .pub-card, .blog-card, .aud-tile, .aud-card-v3, .impact-card-v2, .strategy-block, .strategy-block-v2, .journey-step, .sidebar-card, .content-block, .filter-panel, .tab-panel-frame'
   );
   if (revealTargets.length && !reduceMotion) {
     const parentIndex = new Map();
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- spotlight glow (cursor-following highlight, brand colours) ----
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (canHover) {
-    const glowTargets = document.querySelectorAll('.aud-tile, .pub-card, .blog-card, .impact-card-v2, .sidebar-card');
+    const glowTargets = document.querySelectorAll('.pub-card, .blog-card, .impact-card-v2, .sidebar-card');
     glowTargets.forEach(el => {
       el.classList.add('glow-card', 'glow-active');
       // audience tiles get their own accent colour glow; everything else uses brand orange
