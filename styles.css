@@ -419,6 +419,59 @@ footer .bottom-line{ border-top:1px solid #33403A; font-size:11.5px; color:#8B96
 }
 
 .section{ padding:56px 0; }
+
+/* ============================================================
+   SCROLL REVEAL — progressive enhancement, no-JS fallback is
+   just "always visible" since these classes are added by JS.
+   ============================================================ */
+.reveal-init{ opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal-init.revealed{ opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){
+  .reveal-init{ opacity:1; transform:none; transition:none; }
+}
+
+/* ============================================================
+   SPOTLIGHT GLOW — cursor-following highlight on cards.
+   Adapted to vanilla JS/CSS custom properties, brand hues only.
+   Disabled on touch devices (no hover) via JS gate.
+   ============================================================ */
+.glow-card{ position:relative; isolation:isolate; }
+.glow-card::before{
+  content:""; position:absolute; inset:0; z-index:0; border-radius:inherit;
+  opacity:0; transition:opacity .35s ease; pointer-events:none;
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%), var(--glow-color, rgba(244,115,33,.16)), transparent 72%);
+}
+.glow-card::after{
+  content:""; position:absolute; inset:0; z-index:0; border-radius:inherit; padding:1px;
+  opacity:0; transition:opacity .35s ease; pointer-events:none;
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%), var(--glow-border, rgba(244,115,33,.65)), transparent 72%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+}
+.glow-card.glow-active:hover::before, .glow-card.glow-active:hover::after{ opacity:1; }
+.glow-card > *{ position:relative; z-index:1; }
+
+/* ============================================================
+   SECTION TEXTURE / TINT VARIANTS — break up the flat white/
+   cream rhythm with deliberate, subtle brand-tinted sections.
+   ============================================================ */
+.section-tint-purple{ background:linear-gradient(180deg, rgba(93,36,130,.05), rgba(93,36,130,.015) 60%, transparent); }
+.section-tint-orange{ background:linear-gradient(180deg, rgba(244,115,33,.05), rgba(244,115,33,.015) 60%, transparent); }
+.section-white{ background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+.chevron-texture{ position:relative; overflow:hidden; }
+.chevron-texture::before{
+  content:""; position:absolute; inset:0; z-index:0; opacity:.05; pointer-events:none;
+  background:repeating-linear-gradient(135deg, var(--brand-orange) 0 22px, var(--brand-purple) 22px 44px, transparent 44px 66px);
+}
+.chevron-texture > .wrap{ position:relative; z-index:1; }
+
+/* ---------- CTA micro-interactions ---------- */
+.rail-head a, .aud-tile-cta, .btn{ transition:transform .15s ease, background .15s ease, box-shadow .15s ease, color .15s ease; }
+.rail-head a:hover{ transform:translateX(3px); }
+.blog-card .rm{ display:inline-flex; align-items:center; gap:4px; transition:gap .15s ease; }
+.blog-card:hover .rm::after{ content:"→"; }
+.btn-primary:hover{ box-shadow:0 8px 20px -8px rgba(244,115,33,.5); transform:translateY(-1px); }
 .section-head{ margin-bottom:28px; max-width:640px; }
 .section-head .eyebrow{ margin-bottom:8px; }
 .section-head h2{ font-size:26px; }

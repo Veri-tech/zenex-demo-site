@@ -93,6 +93,51 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => btn.closest('.demo-note').style.display = 'none');
   });
 
+  // ---- scroll reveal (progressive enhancement) ----
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealTargets = document.querySelectorAll(
+    '.section-head, .pub-card, .blog-card, .aud-tile, .impact-card-v2, .strategy-block, .journey-step, .sidebar-card, .content-block, .filter-panel, .tab-panel-frame'
+  );
+  if (revealTargets.length && !reduceMotion) {
+    const parentIndex = new Map();
+    revealTargets.forEach(el => {
+      el.classList.add('reveal-init');
+      const p = el.parentElement;
+      const i = parentIndex.get(p) || 0;
+      el.style.transitionDelay = Math.min(i * 70, 350) + 'ms';
+      parentIndex.set(p, i + 1);
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealTargets.forEach(el => io.observe(el));
+  }
+
+  // ---- spotlight glow (cursor-following highlight, brand colours) ----
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (canHover) {
+    const glowTargets = document.querySelectorAll('.aud-tile, .pub-card, .blog-card, .impact-card-v2, .sidebar-card');
+    glowTargets.forEach(el => {
+      el.classList.add('glow-card', 'glow-active');
+      // audience tiles get their own accent colour glow; everything else uses brand orange
+      const tileColor = getComputedStyle(el).getPropertyValue('--tile-color').trim();
+      if (tileColor) {
+        el.style.setProperty('--glow-color', `color-mix(in srgb, ${tileColor} 22%, transparent)`);
+        el.style.setProperty('--glow-border', `color-mix(in srgb, ${tileColor} 70%, transparent)`);
+      }
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  }
+
   // ---- citation format toggle ----
   const citeBtns = document.querySelectorAll('.cite-fmt-btn');
   if (citeBtns.length) {
@@ -260,6 +305,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="ref-code">${pub.ref}</div>
           `;
           resultsList.appendChild(row);
+          if (canHover) {
+            row.classList.add('glow-card', 'glow-active');
+            row.addEventListener('pointermove', (e) => {
+              const r = row.getBoundingClientRect();
+              row.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+              row.style.setProperty('--my', (e.clientY - r.top) + 'px');
+            });
+          }
         });
       }
       if (countEl) countEl.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
