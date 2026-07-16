@@ -33,15 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- hero carousel ----
   const heroSlides = document.querySelectorAll('.hero-slide');
   const heroDots = document.querySelectorAll('.hero-dot');
+  const heroPrev = document.querySelector('.hero-arrow.prev');
+  const heroNext = document.querySelector('.hero-arrow.next');
   if (heroSlides.length) {
     let heroIdx = 0;
+    let heroTimer;
     function showHero(i) {
-      heroSlides.forEach((s, idx) => s.classList.toggle('active', idx === i));
-      heroDots.forEach((d, idx) => d.classList.toggle('active', idx === i));
-      heroIdx = i;
+      heroIdx = (i + heroSlides.length) % heroSlides.length;
+      heroSlides.forEach((s, idx) => s.classList.toggle('active', idx === heroIdx));
+      heroDots.forEach((d, idx) => d.classList.toggle('active', idx === heroIdx));
     }
-    heroDots.forEach((d, i) => d.addEventListener('click', () => showHero(i)));
-    setInterval(() => showHero((heroIdx + 1) % heroSlides.length), 5000);
+    function resetTimer() {
+      clearInterval(heroTimer);
+      heroTimer = setInterval(() => showHero(heroIdx + 1), 5000);
+    }
+    heroDots.forEach((d, i) => d.addEventListener('click', () => { showHero(i); resetTimer(); }));
+    if (heroPrev) heroPrev.addEventListener('click', () => { showHero(heroIdx - 1); resetTimer(); });
+    if (heroNext) heroNext.addEventListener('click', () => { showHero(heroIdx + 1); resetTimer(); });
+    resetTimer();
   }
 
   // ---- impact carousel arrows ----
@@ -69,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.style.flexDirection = 'column';
       nav.style.gap = '14px';
       nav.style.position = 'absolute';
-      nav.style.top = '78px';
+      nav.style.top = '88px';
       nav.style.left = '0';
       nav.style.right = '0';
       nav.style.background = 'var(--paper)';
