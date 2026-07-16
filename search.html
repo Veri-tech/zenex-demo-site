@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search — Knowledge Hub — Zenex Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="proto-ribbon">DESIGN PROTOTYPE — <b>Filtered search &amp; results</b> · step 2 of 3 · filters are fully live, try them</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="gap:10px;"><img class="js-logo" alt="Zenex Foundation" style="height:36px;width:auto;"></a>
+    <nav class="primary-nav">
+      <a href="index.html">Home</a>
+      <div class="nav-item">
+        <a href="#">About us</a>
+        <div class="mega-dropdown">
+          <a href="#">About us</a>
+          <a href="#">Meet the team</a>
+          <a href="#">Trustees</a>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#">Our strategy</a>
+        <div class="mega-dropdown">
+          <a href="#">Strategy 2030</a>
+          <a href="#">The focus area</a>
+          <a href="#">Funding approach</a>
+          <a href="#">Calls for proposals</a>
+        </div>
+      </div>
+      <a href="knowledge-hub.html" class="current">Knowledge Hub</a>
+      <div class="nav-item">
+        <a href="#">News</a>
+        <div class="mega-dropdown">
+          <a href="#">News</a>
+          <a href="#">Events</a>
+        </div>
+      </div>
+      <a href="#">Contact us</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<div class="wrap crumb"><a href="knowledge-hub.html">Knowledge Hub</a> &nbsp;/&nbsp; Search &amp; filter</div>
+
+<div class="wrap">
+  <div class="search-layout">
+    <aside class="filter-panel">
+      <div class="filter-group">
+        <h5>Audience relevance</h5>
+        <label class="filter-opt"><input type="checkbox" data-group="audience" value="Government"> Government</label>
+        <label class="filter-opt"><input type="checkbox" data-group="audience" value="NGO"> Education NGOs</label>
+        <label class="filter-opt"><input type="checkbox" data-group="audience" value="Donor"> Donors</label>
+        <label class="filter-opt"><input type="checkbox" data-group="audience" value="Researcher"> Researchers</label>
+      </div>
+      <div class="filter-group">
+        <h5>Topic</h5>
+        <label class="filter-opt"><input type="checkbox" data-group="topic" value="Reducing Learning Backlogs"> Reducing Learning Backlogs</label>
+        <label class="filter-opt"><input type="checkbox" data-group="topic" value="Initial Teacher Education"> Initial Teacher Education</label>
+        <label class="filter-opt"><input type="checkbox" data-group="topic" value="Grant-making"> Grant-making</label>
+        <label class="filter-opt"><input type="checkbox" data-group="topic" value="Monitoring & Evaluation"> Monitoring &amp; Evaluation</label>
+        <label class="filter-opt"><input type="checkbox" data-group="topic" value="Curriculum Delivery"> Curriculum Delivery</label>
+      </div>
+      <div class="filter-group">
+        <h5>Phase</h5>
+        <label class="filter-opt"><input type="checkbox" data-group="phase" value="Foundation"> Foundation Phase</label>
+        <label class="filter-opt"><input type="checkbox" data-group="phase" value="Senior"> Senior Phase</label>
+      </div>
+      <div class="filter-group">
+        <h5>Content type</h5>
+        <label class="filter-opt"><input type="checkbox" data-group="type" value="Research Report"> Research Report</label>
+        <label class="filter-opt"><input type="checkbox" data-group="type" value="Learning Brief"> Learning Brief</label>
+        <label class="filter-opt"><input type="checkbox" data-group="type" value="Evaluation"> Evaluation</label>
+        <label class="filter-opt"><input type="checkbox" data-group="type" value="Policy Brief"> Policy Brief</label>
+        <label class="filter-opt"><input type="checkbox" data-group="type" value="Working Article"> Working Article</label>
+      </div>
+    </aside>
+
+    <div>
+      <div class="results-head">
+        <h3 style="font-size:19px;">Search results</h3>
+        <div class="sort-control">Sort:
+          <select id="sort-select">
+            <option value="recent">Most recent</option>
+            <option value="title">Title A–Z</option>
+          </select>
+        </div>
+      </div>
+      <div class="results-count" style="margin-bottom:4px;"></div>
+      <div class="active-filters empty" id="active-filters"></div>
+      <p style="font-size:13px; color:var(--muted);">Try ticking <b>Government</b> under audience relevance, then add <b>Policy Brief</b> under content type — the list narrows live.</p>
+      <div class="results-list"></div>
+
+      <div class="lead-capture">
+        <div class="copy">
+          <div class="t">Get new Zenex research delivered to your inbox</div>
+          <div class="s">Join researchers and educators who receive new publications as they're released</div>
+        </div>
+        <form onsubmit="return false;">
+          <input type="email" placeholder="Your email address">
+          <button type="submit" class="btn btn-primary btn-sm">Notify me →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer-v2">
+  <div class="wrap">
+    <div>
+      <div class="fbrand"><span class="mark">Zx</span><span>ZENEX FOUNDATION</span></div>
+      <p class="ftag">Independent grant-maker strengthening language and mathematics education in South Africa since 1995.</p>
+    </div>
+    <div>
+      <h5>Useful links</h5>
+      <a href="#">About Us</a><a href="knowledge-hub.html">Knowledge Hub</a><a href="#">Our Strategy</a><a href="#">Calls for Proposals</a><a href="#">Contact Us</a>
+    </div>
+    <div>
+      <h5>For</h5>
+      <a href="search.html?a=gov">Government</a><a href="search.html?a=ngo">NGOs</a><a href="search.html?a=donor">Donors</a><a href="search.html?a=research">Researchers</a>
+    </div>
+    <div>
+      <h5>Follow us</h5>
+      <div class="footer-social"><a href="#">f</a><a href="#">X</a><a href="#">in</a></div>
+      <div class="freg">NPO Reg. No. 000-000-NPO</div>
+    </div>
+  </div>
+  <div class="bottom-line">Prototype built by Veritech Digital for presentation purposes — not the live Zenex Foundation website.</div>
+</footer>
+
+<div class="demo-note">
+  <button aria-label="Dismiss">×</button>
+  <b>Prototype note</b>
+  One shared index, filtered by facets — not a separate search engine per audience. Try combining filters on the left.
+</div>
+
+<script>
+window.PUB_DATA = [
+  { title:"Early grade reading outcomes in multilingual classrooms", desc:"A longitudinal study across six provinces on reading outcomes where instruction occurs in a home language.", ref:"REF·RES·014", type:"Research Report", topic:["Reducing Learning Backlogs"], phase:["Foundation"], audience:["Researcher"] },
+  { title:"ICTs in early-grade mathematics education in South Africa", desc:"The role of digital tools in supporting early-grade mathematics learning, across five provinces.", ref:"REF·NGO·009", type:"Learning Brief", topic:["Reducing Learning Backlogs"], phase:["Foundation"], audience:["NGO"] },
+  { title:"Perspectives on learning backlogs in South African schooling", desc:"Scale and nature of learning backlogs in South African primary schools, with recommendations for the DBE.", ref:"REF·GOV·018", type:"Policy Brief", topic:["Reducing Learning Backlogs"], phase:["Foundation"], audience:["Government"] },
+  { title:"The role of language in the teaching and learning of early-grade mathematics", desc:"How language of instruction shapes mathematics outcomes in multilingual Foundation Phase classrooms.", ref:"REF·GOV·025", type:"Research Report", topic:["Curriculum Delivery"], phase:["Foundation"], audience:["Government","Researcher"] },
+  { title:"Building strong foundations in early grade mathematics", desc:"Evidence-based approaches to Foundation Phase mathematics instruction across Zenex-funded programmes.", ref:"REF·NGO·021", type:"Learning Brief", topic:["Curriculum Delivery"], phase:["Foundation"], audience:["NGO"] },
+  { title:"A vocabulary journey with Foundation Phase teachers", desc:"Insights from teachers in a structured vocabulary development programme in the Northern Cape.", ref:"REF·RES·031", type:"Working Article", topic:["Initial Teacher Education"], phase:["Foundation"], audience:["Researcher"] },
+  { title:"Building capacity in education evaluation and research: The Zenex LEAD Programme", desc:"Outcomes of the LEAD capacity-building programme for education evaluators and M&amp;E practitioners.", ref:"REF·DON·009", type:"Evaluation", topic:["Monitoring & Evaluation"], phase:["Senior"], audience:["Donor"] },
+  { title:"Landscape analysis: language in early-grade mathematics teaching", desc:"A landscape analysis informing Zenex's grant-making priorities in language and mathematics.", ref:"REF·GOV·033", type:"Research Report", topic:["Grant-making"], phase:["Foundation"], audience:["Government","Donor"] },
+  { title:"Senior Phase English & Mathematics: remediation at the point of entry", desc:"Findings on remediating learner backlogs at the transition into high school.", ref:"REF·GOV·029", type:"Research Report", topic:["Reducing Learning Backlogs"], phase:["Senior"], audience:["Government","NGO"] },
+  { title:"20 years of Zenex: reflections on evidence-led grant-making", desc:"An anthology of staff and partner reflections on embedding M&amp;E practice across two decades of grant-making.", ref:"REF·DON·002", type:"Evaluation", topic:["Grant-making"], phase:["Senior"], audience:["Donor"] },
+];
+</script>
+<script src="assets.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
