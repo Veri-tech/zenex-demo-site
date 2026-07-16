@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- scroll reveal (progressive enhancement) ----
   const revealTargets = document.querySelectorAll(
-    '.section-head, .pub-card, .blog-card, .aud-tile, .impact-card-v2, .strategy-block, .journey-step, .sidebar-card, .content-block, .filter-panel, .tab-panel-frame'
+    '.section-head, .pub-card, .blog-card, .aud-tile, .aud-col, .impact-card-v2, .strategy-block, .strategy-block-v2, .journey-step, .sidebar-card, .content-block, .filter-panel, .tab-panel-frame'
   );
   if (revealTargets.length && !reduceMotion) {
     const parentIndex = new Map();
