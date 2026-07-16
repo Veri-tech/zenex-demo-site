@@ -56,44 +56,57 @@
   </div>
 </header>
 
-<!-- Trust bar — credibility signals for institutional audiences -->
-<div class="trust-bar">
+<!-- Split hero — carousel-synced text + image. Advancing the slide
+     changes headline, copy, buttons and image together, with a
+     word-stagger entrance animation on the text (vanilla JS/CSS,
+     same visual idea as GSAP SplitText, no dependency needed). -->
+<section class="hero-split">
   <div class="wrap">
-    <div class="trust-items">
-      <span class="trust-item">NPO Reg. No. 000-000-NPO</span>
-      <span class="trust-dot"></span>
-      <span class="trust-item">Est. 1995</span>
-      <span class="trust-dot"></span>
-      <span class="trust-item">R1.5bn+ invested in SA education</span>
-      <span class="trust-dot"></span>
-      <span class="trust-item">Partner: Dept. of Basic Education</span>
-    </div>
-    <div class="trust-logos">
-      <div class="trust-logo"></div><div class="trust-logo"></div><div class="trust-logo"></div>
-    </div>
-  </div>
-</div>
+    <div class="hero-split-grid">
 
-<!-- Hero carousel — real banner designs, full-bleed, no overlay text (already baked into the artwork) -->
-<section class="hero-carousel">
-  <div class="hero-slide active" data-bg="hero1"></div>
-  <div class="hero-slide" data-bg="hero2"></div>
-  <div class="hero-slide" data-bg="hero3"></div>
-  <button class="hero-arrow prev" aria-label="Previous slide">‹</button>
-  <button class="hero-arrow next" aria-label="Next slide">›</button>
-  <div class="hero-dots">
-    <button class="hero-dot active"></button>
-    <button class="hero-dot"></button>
-    <button class="hero-dot"></button>
+      <div class="hero-split-text">
+        <p class="eyebrow hero-fade-el" id="hs-eyebrow">Independent grant-maker · Est. 1995</p>
+        <h1 id="hs-headline"></h1>
+        <p class="hero-fade-el" id="hs-paragraph"></p>
+        <div class="hero-split-actions hero-fade-el" id="hs-actions">
+          <a href="#" class="btn btn-primary" id="hs-btn1">View Strategy 2030 →</a>
+          <a href="knowledge-hub.html" class="btn btn-ghost" id="hs-btn2">Explore the Knowledge Hub</a>
+        </div>
+        <div class="hero-dots-v2" id="hs-dots">
+          <button class="hero-dot-v2 active"></button>
+          <button class="hero-dot-v2"></button>
+          <button class="hero-dot-v2"></button>
+        </div>
+      </div>
+
+      <div class="hero-split-image">
+        <div class="frame">
+          <img data-src="heroClean1" class="active" alt="">
+          <img data-src="heroClean2" alt="">
+          <img data-src="heroClean3" alt="">
+        </div>
+        <div class="hero-badge-float">
+          <div class="n" id="hs-badge-num">30</div>
+          <div class="l" id="hs-badge-label">Years reading, connecting<br>and learning in education</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<section class="section" style="padding:36px 0 0; text-align:center;">
-  <div class="wrap" style="max-width:680px;">
-    <p class="eyebrow" style="color:var(--action);">The Zenex Foundation is an independent grant-maker</p>
-    <p style="font-size:14.5px; color:var(--muted); margin-top:10px; line-height:1.7;">established in 1995 to improve language and mathematics education in South Africa. We invest in evidence-based programmes that strengthen teaching, learning in the early grades.</p>
+<!-- Stat bar — real, verifiable facts only -->
+<section class="stat-bar">
+  <div class="wrap" style="padding:0;">
+    <div class="stat-bar-grid">
+      <div class="stat-item"><div class="v">NPO 000-000-NPO</div><div class="l">Registered non-profit since 1995</div></div>
+      <div class="stat-item"><div class="v">R1.5bn+</div><div class="l">Invested in education programmes</div></div>
+      <div class="stat-item"><div class="v">4 provinces</div><div class="l">Gauteng, KZN, Western Cape, Eastern Cape</div></div>
+      <div class="stat-item"><div class="v">Board-led</div><div class="l">Governed by an independent Board of Trustees</div></div>
+    </div>
   </div>
 </section>
+
 
 <section class="section" style="padding:32px 0 20px;">
   <div class="wrap">

@@ -30,27 +30,107 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---- hero carousel ----
-  const heroSlides = document.querySelectorAll('.hero-slide');
-  const heroDots = document.querySelectorAll('.hero-dot');
-  const heroPrev = document.querySelector('.hero-arrow.prev');
-  const heroNext = document.querySelector('.hero-arrow.next');
-  if (heroSlides.length) {
-    let heroIdx = 0;
-    let heroTimer;
-    function showHero(i) {
-      heroIdx = (i + heroSlides.length) % heroSlides.length;
-      heroSlides.forEach((s, idx) => s.classList.toggle('active', idx === heroIdx));
-      heroDots.forEach((d, idx) => d.classList.toggle('active', idx === heroIdx));
+  // ---- split hero: carousel-synced text + image, word-stagger entrance ----
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hsHeadline = document.getElementById('hs-headline');
+  if (hsHeadline) {
+    const heroSplitData = [
+      {
+        eyebrow: 'Independent grant-maker · Est. 1995',
+        headline: 'Three decades of evidence that changed how South Africa teaches reading and maths.',
+        paragraph: 'The Zenex Foundation invests in evidence-led programmes that strengthen language and mathematics teaching from Grade R to Grade 6 — and shares what we learn so others can use it.',
+        btn1: 'View Strategy 2030 →', btn1href: '#',
+        btn2: 'Explore the Knowledge Hub', btn2href: 'knowledge-hub.html',
+        badgeNum: '30', badgeLabel: 'Years reading, connecting<br>and learning in education',
+      },
+      {
+        eyebrow: 'Evidence-led grant-making',
+        headline: 'Built on evidence, not assumptions about what South African classrooms need.',
+        paragraph: 'Every programme we fund starts with research. Every result feeds back into how we fund the next one.',
+        btn1: 'See our approach →', btn1href: '#',
+        btn2: 'Explore the Knowledge Hub', btn2href: 'knowledge-hub.html',
+        badgeNum: '4', badgeLabel: 'Provinces reached through<br>partnership programmes',
+      },
+      {
+        eyebrow: 'Strategy 2030',
+        headline: 'Leading, connecting and learning — across three decades of partnership.',
+        paragraph: 'From early-grade literacy to senior-phase mathematics, our work follows the evidence of what actually improves outcomes for learners.',
+        btn1: 'Read Strategy 2030 →', btn1href: '#',
+        btn2: 'Explore the Knowledge Hub', btn2href: 'knowledge-hub.html',
+        badgeNum: '1995', badgeLabel: 'Founded to strengthen<br>SA education outcomes',
+      },
+    ];
+
+    const hsEyebrow = document.getElementById('hs-eyebrow');
+    const hsPara = document.getElementById('hs-paragraph');
+    const hsActions = document.getElementById('hs-actions');
+    const hsBtn1 = document.getElementById('hs-btn1');
+    const hsBtn2 = document.getElementById('hs-btn2');
+    const hsBadgeNum = document.getElementById('hs-badge-num');
+    const hsBadgeLabel = document.getElementById('hs-badge-label');
+    const hsImgs = document.querySelectorAll('.hero-split-image .frame img');
+    const hsDots = document.querySelectorAll('.hero-dot-v2');
+
+    function splitIntoWords(el, text) {
+      el.innerHTML = '';
+      const words = text.split(' ');
+      words.forEach((w, i) => {
+        const span = document.createElement('span');
+        span.className = 'split-word';
+        span.textContent = w;
+        el.appendChild(span);
+        if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+      });
     }
-    function resetTimer() {
-      clearInterval(heroTimer);
-      heroTimer = setInterval(() => showHero(heroIdx + 1), 5000);
+
+    let hsIndex = 0;
+    function renderHeroSplit(index, animate) {
+      const data = heroSplitData[index];
+      hsEyebrow.textContent = data.eyebrow;
+      hsPara.textContent = data.paragraph;
+      hsBtn1.textContent = data.btn1; hsBtn1.href = data.btn1href;
+      hsBtn2.textContent = data.btn2; hsBtn2.href = data.btn2href;
+      hsBadgeNum.textContent = data.badgeNum;
+      hsBadgeLabel.innerHTML = data.badgeLabel;
+      splitIntoWords(hsHeadline, data.headline);
+
+      hsImgs.forEach((img, i) => img.classList.toggle('active', i === index));
+      hsDots.forEach((d, i) => d.classList.toggle('active', i === index));
+
+      const words = hsHeadline.querySelectorAll('.split-word');
+      if (animate && !reduceMotion) {
+        [hsEyebrow, hsPara, hsActions].forEach(el => el.classList.remove('in'));
+        words.forEach((w, i) => { w.classList.remove('in'); w.style.transitionDelay = Math.min(i * 35, 420) + 'ms'; });
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            words.forEach(w => w.classList.add('in'));
+            hsEyebrow.classList.add('in');
+            setTimeout(() => hsPara.classList.add('in'), 160);
+            setTimeout(() => hsActions.classList.add('in'), 300);
+          });
+        });
+      } else {
+        words.forEach(w => w.classList.add('in'));
+        hsEyebrow.classList.add('in'); hsPara.classList.add('in'); hsActions.classList.add('in');
+      }
     }
-    heroDots.forEach((d, i) => d.addEventListener('click', () => { showHero(i); resetTimer(); }));
-    if (heroPrev) heroPrev.addEventListener('click', () => { showHero(heroIdx - 1); resetTimer(); });
-    if (heroNext) heroNext.addEventListener('click', () => { showHero(heroIdx + 1); resetTimer(); });
-    resetTimer();
+
+    let hsTimer;
+    function goToHeroSplit(i) {
+      hsIndex = (i + heroSplitData.length) % heroSplitData.length;
+      renderHeroSplit(hsIndex, true);
+    }
+    function resetHsTimer() {
+      clearInterval(hsTimer);
+      hsTimer = setInterval(() => goToHeroSplit(hsIndex + 1), 6000);
+    }
+    hsDots.forEach((d, i) => d.addEventListener('click', () => { goToHeroSplit(i); resetHsTimer(); }));
+
+    // wait one frame for asset injection (data-src images) to have run first
+    requestAnimationFrame(() => {
+      renderHeroSplit(0, true);
+      resetHsTimer();
+    });
   }
 
   // ---- impact carousel arrows ----
@@ -94,7 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---- scroll reveal (progressive enhancement) ----
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealTargets = document.querySelectorAll(
     '.section-head, .pub-card, .blog-card, .aud-tile, .impact-card-v2, .strategy-block, .journey-step, .sidebar-card, .content-block, .filter-panel, .tab-panel-frame'
   );
