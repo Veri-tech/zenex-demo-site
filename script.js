@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---- header scroll shadow ----
+  const headerV2 = document.querySelector('.site-header-v2');
+  if (headerV2) {
+    function toggleHeaderShadow() {
+      headerV2.classList.toggle('scrolled', window.scrollY > 8);
+    }
+    toggleHeaderShadow();
+    window.addEventListener('scroll', toggleHeaderShadow, { passive: true });
+  }
+
   // ---- mega menu (click-to-toggle on touch/mobile, hover on desktop via CSS) ----
   document.querySelectorAll('.nav-item > a').forEach(link => {
     link.addEventListener('click', (e) => {
