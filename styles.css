@@ -788,13 +788,10 @@ footer .bottom-line{ border-top:1px solid #33403A; font-size:11.5px; color:#8B96
 .blog-card-dark .rm .arrow{ display:inline-block; transition:transform .2s ease; }
 
 /* ---------- testimonial impact cards ---------- */
-.testimonial-card{ border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--card); transition:box-shadow .25s ease, transform .25s ease; }
-.testimonial-card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px -18px rgba(26,20,32,.2); }
-.testimonial-card img{ width:100%; height:220px; object-fit:cover; display:block; }
-.testimonial-card .body{ padding:22px; }
-.testimonial-card .name{ font-family:var(--serif); font-size:18px; font-weight:600; color:var(--ink); }
-.testimonial-card .org{ font-size:13px; color:var(--muted-2); margin-bottom:14px; margin-top:2px; }
-.testimonial-card .quote{ font-size:14px; color:var(--muted); line-height:1.55; }
+.testimonial-card{ border-radius:var(--radius); overflow:hidden; transition:box-shadow .25s ease, transform .25s ease; }
+.testimonial-card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px -18px rgba(26,20,32,.25); }
+.testimonial-card img{ width:100%; height:auto; display:block; }
+.impact-grid > *:nth-child(n+4){ display:none; }
 .testimonial-badge{
   border-radius:var(--radius); overflow:hidden; background:var(--action);
   display:flex; align-items:center; justify-content:center; padding:40px 28px; text-align:center; color:#fff;
