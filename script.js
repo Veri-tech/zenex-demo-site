@@ -158,6 +158,19 @@ document.addEventListener('DOMContentLoaded', () => {
     impactPrev.addEventListener('click', () => rotate(-1));
   }
 
+  // ---- blog/news carousel arrows (Latest from Zenex) ----
+  const blogTrack = document.querySelector('.blog-grid');
+  const blogPrev = document.querySelector('.blog-arrow.prev');
+  const blogNext = document.querySelector('.blog-arrow.next');
+  if (blogTrack && blogPrev && blogNext) {
+    function rotateBlog(dir) {
+      if (dir === 1) { blogTrack.appendChild(blogTrack.firstElementChild); }
+      else { blogTrack.insertBefore(blogTrack.lastElementChild, blogTrack.firstElementChild); }
+    }
+    blogNext.addEventListener('click', () => rotateBlog(1));
+    blogPrev.addEventListener('click', () => rotateBlog(-1));
+  }
+
   // ---- mobile nav toggle ----
   const navToggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.primary-nav, .primary-nav-v2');

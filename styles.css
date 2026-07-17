@@ -669,6 +669,15 @@ footer .bottom-line{ border-top:1px solid #33403A; font-size:11.5px; color:#8B96
 .impact-carousel-wrap{ position:relative; }
 .impact-arrow{ position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; background:var(--card); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:5; font-size:14px; color:var(--ink); }
 .impact-arrow.prev{ left:-17px; } .impact-arrow.next{ right:-17px; }
+
+/* ---------- dark carousel (Latest from Zenex) ---------- */
+.blog-carousel-wrap{ position:relative; }
+.blog-arrow{ position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; background:var(--ink-2); border:1px solid var(--line-dark); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:5; font-size:14px; color:#fff; transition:background .2s ease; }
+.blog-arrow:hover{ background:var(--action); border-color:var(--action); }
+.blog-arrow.prev{ left:-17px; } .blog-arrow.next{ right:-17px; }
+.blog-grid > *:nth-child(n+5){ display:none; }
+@media (max-width:960px){ .blog-grid > *:nth-child(n+3){ display:none; } .blog-grid > *:nth-child(-n+4){ display:block; } }
+@media (max-width:520px){ .blog-grid > *:nth-child(n+2){ display:none; } .blog-grid > *:nth-child(-n+4){ display:block; } }
 .impact-card-v2{ border-radius:8px; overflow:hidden; position:relative; height:290px; }
 .impact-card-v2 img{ width:100%; height:100%; object-fit:cover; object-position:center 12%; display:block; }
 .impact-card-v2 .label{ position:absolute; top:0; left:0; right:0; padding:10px 14px; background:var(--brand-purple); color:#fff; }
