@@ -596,7 +596,7 @@ footer .bottom-line{ border-top:1px solid #33403A; font-size:11.5px; color:#8B96
 .strategy-block-v2:hover .strategy-photo::after{ opacity:1; }
 .strategy-block-v2:hover .strategy-photo img{ transform:scale(1.045); }
 
-.strategy-copy{ padding:clamp(24px,4vw,40px) clamp(0px,4vw,56px); }
+.strategy-copy{ padding:0 clamp(0px,4vw,56px); }
 .strategy-copy .eyebrow{ color:var(--action); margin-bottom:12px; }
 .strategy-copy h3{ font-size:34px; font-weight:600; line-height:1.2; margin-bottom:20px; }
 .strategy-copy .desc{ font-size:16px; color:var(--muted); line-height:1.65; margin-bottom:28px; max-width:460px; }
