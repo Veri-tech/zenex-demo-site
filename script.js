@@ -133,29 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---- strategy block: force photo height to exactly match the text column ----
-  // (done in JS rather than pure CSS grid-stretch, which is unreliable with
-  // percentage-height images across browsers)
-  const stratPhoto = document.querySelector('.strategy-photo');
-  const stratCopy = document.querySelector('.strategy-copy');
-  if (stratPhoto && stratCopy) {
-    function matchStrategyHeight() {
-      if (window.innerWidth <= 820) {
-        stratPhoto.style.height = ''; // stacked layout on mobile/tablet — let it size naturally
-        return;
-      }
-      stratPhoto.style.height = stratCopy.getBoundingClientRect().height + 'px';
-    }
-    matchStrategyHeight();
-    window.addEventListener('resize', matchStrategyHeight);
-    window.addEventListener('load', matchStrategyHeight);
-    // re-check after the strategy image itself loads (layout can shift slightly)
-    const stratImg = stratPhoto.querySelector('img');
-    if (stratImg) stratImg.addEventListener('load', matchStrategyHeight);
-    // and once more shortly after, to catch any late font/asset reflow
-    setTimeout(matchStrategyHeight, 300);
-  }
-
   // ---- impact carousel arrows ----
   const impactTrack = document.querySelector('.impact-grid');
   const impactPrev = document.querySelector('.impact-arrow.prev');
@@ -173,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- mobile nav toggle ----
   const navToggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.primary-nav');
+  const nav = document.querySelector('.primary-nav, .primary-nav-v2');
   if (navToggle && nav) {
     navToggle.addEventListener('click', () => {
       const open = nav.style.display === 'flex';
