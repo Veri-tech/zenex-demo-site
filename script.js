@@ -357,12 +357,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---- feedback yes/no toggle ----
+  // ---- feedback yes/no toggle + submit thank-you state ----
   const fbYes = document.getElementById('fb-yes');
   const fbNo = document.getElementById('fb-no');
   if (fbYes && fbNo) {
     fbYes.addEventListener('click', () => { fbYes.classList.add('sel'); fbNo.classList.remove('sel'); });
     fbNo.addEventListener('click', () => { fbNo.classList.add('sel'); fbYes.classList.remove('sel'); });
+    const fbBlock = document.querySelector('.feedback-block');
+    const fbSubmit = fbBlock && fbBlock.querySelector('.btn-primary');
+    if (fbSubmit) {
+      fbSubmit.addEventListener('click', () => {
+        fbBlock.innerHTML = '<h4 style="margin-bottom:6px;">Thank you for your feedback</h4><p class="sub">It helps Zenex shape what gets researched — and how it gets shared — next.</p>';
+      });
+    }
   }
 
   // ---- browse-by-topic tiles ----
