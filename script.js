@@ -240,6 +240,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // cards open the publication page, carrying the active audience view with them
+    hubCards.forEach(card => {
+      card.style.cursor = 'pointer';
+      card.setAttribute('role', 'link');
+      card.setAttribute('tabindex', '0');
+      const open = () => {
+        const qs = state.aud !== 'all' ? '?a=' + state.aud : '';
+        location.href = 'publication.html' + qs;
+      };
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(); });
+    });
+
     // deep-link support: ?a= / ?audience= for audience, ?t= for topic
     const params = new URLSearchParams(location.search);
     const initialAud = params.get('a') || params.get('audience');
@@ -407,7 +420,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     modeTabs.forEach(t => t.addEventListener('click', () => setMode(t.dataset.modeTab)));
-    setMode('gov'); // default
+    // open in the audience view carried over from the Hub/search (?a=gov), default gov
+    const pubParams = new URLSearchParams(location.search);
+    const pubAud = pubParams.get('a') || pubParams.get('audience');
+    setMode(modeMeta[pubAud] ? pubAud : 'gov');
   }
 
   // ============================================================
@@ -471,7 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         filtered.forEach(pub => {
           const row = document.createElement('a');
-          row.href = 'publication.html';
+          const searchAud = new URLSearchParams(location.search).get('a');
+          row.href = 'publication.html' + (searchAud ? '?a=' + searchAud : '');
           row.className = 'result-row';
           row.style.textDecoration = 'none';
           row.style.color = 'inherit';
