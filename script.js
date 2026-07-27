@@ -262,6 +262,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.aud !== 'all' || state.topic) applyFilters();
   }
 
+  // ---- team bio expand/collapse ----
+  document.querySelectorAll('[data-toggle-bio]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const bio = btn.parentElement.querySelector('.p-bio');
+      const clamped = bio.classList.toggle('clamped');
+      btn.textContent = clamped ? 'Read more' : 'Read less';
+    });
+  });
+
   // ---- mobile nav toggle ----
   const navToggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.primary-nav, .primary-nav-v2');
