@@ -290,7 +290,7 @@ footer .bottom-line{ border-top:1px solid #33403A; font-size:11.5px; color:#8B96
 .proto-ribbon b{ font-weight:700; }
 
 /* ---------- breadcrumb ---------- */
-.crumb{ font-family:var(--mono); font-size:11.5px; color:var(--muted); padding:18px 0 0; }
+.crumb{ font-family:var(--mono); font-size:11.5px; color:var(--muted); padding-top:18px; }
 .crumb a{ text-decoration:none; color:var(--muted); }
 .crumb a:hover{ color:var(--ink); }
 
