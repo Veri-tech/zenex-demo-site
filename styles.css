@@ -1002,3 +1002,5 @@ details.faq-item summary::after{ content:"+"; font-size:20px; color:var(--action
 details.faq-item[open] summary::after{ transform:rotate(45deg); }
 details.faq-item[open] summary{ border-bottom:1px solid var(--line); }
 details.faq-item .faq-a{ padding:16px 22px 20px; font-size:14.5px; color:var(--muted); line-height:1.7; }
+.avatar-photo{ width:64px; height:64px; border-radius:50%; margin-bottom:16px; object-fit:cover; display:block; box-shadow:0 4px 12px -4px rgba(26,20,32,.25); }
+.person-card.lead .avatar-photo{ width:76px; height:76px; }
