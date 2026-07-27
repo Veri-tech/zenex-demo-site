@@ -171,6 +171,56 @@ document.addEventListener('DOMContentLoaded', () => {
     blogPrev.addEventListener('click', () => rotateBlog(-1));
   }
 
+  // ---- Knowledge Hub: in-place audience filtering (production behaviour) ----
+  // Tabs filter the shared library below by relevance tag, sync the URL for
+  // deep-linking, and never navigate away. Programmes (PRG) are cross-cutting
+  // and remain visible for every audience.
+  const hubTabs = document.querySelectorAll('.index-tab[data-aud]');
+  if (hubTabs.length) {
+    const CODE_MAP = { gov: 'GOV', ngo: 'NGO', donor: 'DON', research: 'RES' };
+    const hubCards = Array.from(document.querySelectorAll('#latest .pub-card'));
+
+    function cardAudience(card) {
+      const meta = card.querySelector('.meta span');
+      if (!meta) return null;
+      const m = meta.textContent.match(/REF\s*·\s*([A-Z]{3})/);
+      return m ? m[1] : null;
+    }
+
+    function applyHubFilter(aud) {
+      const wantCode = CODE_MAP[aud] || null;
+      hubTabs.forEach(t => t.classList.toggle('active', t.dataset.aud === aud));
+      hubCards.forEach(card => {
+        const code = cardAudience(card);
+        const show = !wantCode || code === wantCode || code === 'PRG';
+        card.style.display = show ? '' : 'none';
+      });
+      // hide any rail whose grid ended up entirely empty
+      document.querySelectorAll('#latest .rail-head').forEach(head => {
+        const grid = head.nextElementSibling;
+        if (!grid) return;
+        const anyVisible = Array.from(grid.children).some(c => c.style.display !== 'none');
+        head.style.display = anyVisible ? '' : 'none';
+        grid.style.display = anyVisible ? '' : 'none';
+      });
+    }
+
+    hubTabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        const aud = tab.dataset.aud;
+        applyHubFilter(aud);
+        const url = aud === 'all' ? location.pathname : location.pathname + '?a=' + aud;
+        history.replaceState(null, '', url);
+      });
+    });
+
+    // deep-link support: ?a=gov (tabs) or ?audience=gov (homepage cards) applies the filter on load
+    const params = new URLSearchParams(location.search);
+    const initial = params.get('a') || params.get('audience');
+    if (initial && initial !== 'all') applyHubFilter(initial);
+  }
+
   // ---- mobile nav toggle ----
   const navToggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.primary-nav, .primary-nav-v2');
