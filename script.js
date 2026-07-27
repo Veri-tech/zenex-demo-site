@@ -171,30 +171,41 @@ document.addEventListener('DOMContentLoaded', () => {
     blogPrev.addEventListener('click', () => rotateBlog(-1));
   }
 
-  // ---- Knowledge Hub: in-place audience filtering (production behaviour) ----
-  // Tabs filter the shared library below by relevance tag, sync the URL for
-  // deep-linking, and never navigate away. Programmes (PRG) are cross-cutting
-  // and remain visible for every audience.
+  // ---- Knowledge Hub: in-place filtering (production behaviour) ----
+  // Audience tabs and topic tiles filter the shared library together (an
+  // intersection), sync the URL for deep-linking, and never navigate away.
+  // Programmes (PRG) are cross-cutting for audiences, but hide when a
+  // specific topic is selected since they aren't tagged with topics.
   const hubTabs = document.querySelectorAll('.index-tab[data-aud]');
   if (hubTabs.length) {
     const CODE_MAP = { gov: 'GOV', ngo: 'NGO', donor: 'DON', research: 'RES' };
     const hubCards = Array.from(document.querySelectorAll('#latest .pub-card'));
+    const topicTiles = Array.from(document.querySelectorAll('.topic-tile'));
+    const state = { aud: 'all', topic: null };
 
     function cardAudience(card) {
       const meta = card.querySelector('.meta span');
-      if (!meta) return null;
-      const m = meta.textContent.match(/REF\s*·\s*([A-Z]{3})/);
+      const m = meta && meta.textContent.match(/·\s*([A-Z]{3})\s*·/);
       return m ? m[1] : null;
     }
+    function cardTopic(card) {
+      const tag = card.querySelector('.tag-row .tag');
+      return tag ? tag.textContent.trim() : null;
+    }
 
-    function applyHubFilter(aud) {
-      const wantCode = CODE_MAP[aud] || null;
-      hubTabs.forEach(t => t.classList.toggle('active', t.dataset.aud === aud));
+    function applyFilters() {
+      const wantCode = CODE_MAP[state.aud] || null;
+      hubTabs.forEach(t => t.classList.toggle('active', t.dataset.aud === state.aud));
+      topicTiles.forEach(t => t.classList.toggle('active', t.querySelector('.n').textContent.trim() === state.topic));
+
       hubCards.forEach(card => {
         const code = cardAudience(card);
-        const show = !wantCode || code === wantCode || code === 'PRG';
-        card.style.display = show ? '' : 'none';
+        const topic = cardTopic(card);
+        const audOk = !wantCode || code === wantCode || code === 'PRG';
+        const topicOk = !state.topic || topic === state.topic;
+        card.style.display = (audOk && topicOk) ? '' : 'none';
       });
+
       // hide any rail whose grid ended up entirely empty
       document.querySelectorAll('#latest .rail-head').forEach(head => {
         const grid = head.nextElementSibling;
@@ -203,22 +214,39 @@ document.addEventListener('DOMContentLoaded', () => {
         head.style.display = anyVisible ? '' : 'none';
         grid.style.display = anyVisible ? '' : 'none';
       });
+
+      // sync URL: ?a=gov&t=Curriculum+Delivery (omit defaults)
+      const params = new URLSearchParams();
+      if (state.aud !== 'all') params.set('a', state.aud);
+      if (state.topic) params.set('t', state.topic);
+      const qs = params.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
     }
 
     hubTabs.forEach(tab => {
       tab.addEventListener('click', (e) => {
         e.preventDefault();
-        const aud = tab.dataset.aud;
-        applyHubFilter(aud);
-        const url = aud === 'all' ? location.pathname : location.pathname + '?a=' + aud;
-        history.replaceState(null, '', url);
+        state.aud = tab.dataset.aud;
+        applyFilters();
       });
     });
 
-    // deep-link support: ?a=gov (tabs) or ?audience=gov (homepage cards) applies the filter on load
+    topicTiles.forEach(tile => {
+      tile.style.cursor = 'pointer';
+      tile.addEventListener('click', () => {
+        const name = tile.querySelector('.n').textContent.trim();
+        state.topic = (state.topic === name) ? null : name; // click again to clear
+        applyFilters();
+      });
+    });
+
+    // deep-link support: ?a= / ?audience= for audience, ?t= for topic
     const params = new URLSearchParams(location.search);
-    const initial = params.get('a') || params.get('audience');
-    if (initial && initial !== 'all') applyHubFilter(initial);
+    const initialAud = params.get('a') || params.get('audience');
+    const initialTopic = params.get('t');
+    if (initialAud && CODE_MAP[initialAud]) state.aud = initialAud;
+    if (initialTopic) state.topic = initialTopic;
+    if (state.aud !== 'all' || state.topic) applyFilters();
   }
 
   // ---- mobile nav toggle ----
